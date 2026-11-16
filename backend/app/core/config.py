@@ -1,4 +1,4 @@
-from typing import Optional
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,7 +11,7 @@ class Settings(BaseSettings):
 
     app_name: str = "CampusBreak API"
     environment: str = "development"
-    secret_key: Optional[str] = None
+    secret_key: str | None = None
 
 
 settings = Settings()

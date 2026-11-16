@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from app.core.config import settings
 from app.schemas.health import HealthRead
 
@@ -11,3 +12,4 @@ def get_health() -> HealthRead:
         status="ok",
         environment=settings.environment,
     )
+
