@@ -1,15 +1,21 @@
-from fastapi import APIRouter
+from typing import Annotated
 
-from app.core.config import settings
+from fastapi import APIRouter, Depends
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
 from app.schemas.health import HealthRead
 
-router = APIRouter(prefix="/api", tags=["Health"])
+router = APIRouter(prefix="/api", tags=["health"])
 
 
 @router.get("/health", response_model=HealthRead)
-def get_health() -> HealthRead:
-    return HealthRead(
-        status="ok",
-        environment=settings.environment,
-    )
+def get_health(db: Annotated[Session, Depends(get_db)]) -> HealthRead:
+    try:
+        db.execute(text("SELECT 1"))
+        db_status = "ok"
+    except Exception:
+        db_status = "disconnected"
 
+    return HealthRead(status="ok", environment=f"db: {db_status}")
