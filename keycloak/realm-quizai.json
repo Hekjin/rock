@@ -1,0 +1,123 @@
+{
+  "realm": "quizai",
+  "enabled": true,
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "accessTokenLifespan": 300,
+  "roles": {
+    "realm": [
+      {
+        "name": "student",
+        "description": "Student role"
+      },
+      {
+        "name": "teacher",
+        "description": "Teacher role"
+      },
+      {
+        "name": "admin",
+        "description": "Administrator role"
+      }
+    ]
+  },
+  "defaultRole": {
+    "name": "default-roles-quizai",
+    "description": "Default role for new users",
+    "composite": true,
+    "composites": {
+      "realm": [
+        "student"
+      ]
+    }
+  },
+  "clients": [
+    {
+      "clientId": "quizai-web",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "redirectUris": [
+        "http://localhost:8000/*",
+        "http://127.0.0.1:8000/*",
+        "http://localhost:8000/docs/oauth2-redirect",
+        "http://127.0.0.1:8000/docs/oauth2-redirect",
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "protocolMappers": [
+        {
+          "name": "audience-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "quizai-api",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "teacher@demo.kz",
+      "email": "teacher@demo.kz",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Teacher",
+      "lastName": "Demo",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "teacher"
+      ]
+    },
+    {
+      "username": "student@demo.kz",
+      "email": "student@demo.kz",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Student",
+      "lastName": "Demo",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "student"
+      ]
+    },
+    {
+      "username": "admin@demo.kz",
+      "email": "admin@demo.kz",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "Demo",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    }
+  ]
+}
